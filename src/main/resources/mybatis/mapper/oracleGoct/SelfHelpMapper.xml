@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracleGoct.SelfHelpMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.SelfHelp" >
+
+        <result column="TEAM" property="team" jdbcType="VARCHAR" />
+        <result column="QUESTION" property="question" jdbcType="VARCHAR" />
+        <result column="SOLUTION" property="solution" jdbcType="VARCHAR" />
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID,COMPANYNAME,PHONE
+    </sql>
+
+
+    <select id="getHelpByKey" resultType="goct.query.demo.model.SelfHelp">
+        select *
+        from GOCT_SELFHELP_CS t
+        where QUESTION LIKE CONCAT(CONCAT('%',#{question}),'%')
+    </select>
+
+
+
+
+
+
+
+</mapper>

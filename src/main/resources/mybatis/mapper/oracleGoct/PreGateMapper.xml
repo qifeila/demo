@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracleGoct.PreGateMapper">
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.PreGate">
+
+
+    </resultMap>
+
+
+    <insert id="insertPreGate" parameterType="goct.query.demo.model.PreGate">
+        insert into GOCT_PRE_GATE(CNTR_NO,REPAIRER,REPAIR_REMARK,REPAIR_TIME,EXTRACT_FLAG,CNTR_REPAIR_STATE
+        )
+        values (#{cntr_no}, #{repairer}, #{repair_remark}, #{repair_time}, #{extract_flag}, #{cntr_repair_state})
+    </insert>
+
+    <select id="findByCntr" resultType="goct.query.demo.model.PreGate">
+        select *
+        from GOCT_PRE_GATE
+        where  CNTR_NO = #{cntrNo}
+        and EXTRACT_FLAG = 'N'
+        order by REPAIR_TIME desc
+    </select>
+
+</mapper>

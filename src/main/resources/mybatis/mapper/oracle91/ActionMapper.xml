@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracle91.ActionMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.Action" >
+        <id column="ACTION_ID" property="actionId" jdbcType="VARCHAR" />
+
+        <result column="FREQUENCY" property="frequency" jdbcType="VARCHAR" />
+        <result column="ACTION" property="actionName" jdbcType="VARCHAR" />
+        <result column="TIME" property="time" jdbcType="VARCHAR" />
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID,COMPANYNAME,PHONE
+    </sql>
+
+
+
+    <!--//插入用户行为数据。-->
+   <!-- <select id="insertAction" >
+        insert into PUBLIC_QUERY_NUM (ACTION,ACTION_ID ,FREQUENCY,TIME)
+        values(#{actionName},#{actionId},#{frequency},#{time})
+    </select>-->
+    <!--//插入用户行为数据。去除actionId-->
+    <select id="insertAction" >
+        insert into PUBLIC_QUERY_NUM (ACTION ,FREQUENCY,TIME)
+        values(#{actionName},#{frequency},#{time})
+    </select>
+    <!--//插入用户行为数据jianhua 。-->
+    <select id="insertActionSim" >
+        insert into PUBLIC_QUERY_NUM (ACTION,TIME)
+        values(#{actionName},#{time})
+    </select>
+
+    <select id="updateAction" >
+        update  [ePortal].[SystemManagement].[User] SET EmployeeID =  #{employeeId}
+        WHERE  Name =  #{name}
+    </select>
+
+
+    <!--//获取id。-->
+    <select id="getActionId" resultType="Integer" >
+        select ACTION_ID
+        from PUBLIC_QUERY_NUM
+        where rownum =1
+        order by ACTION_ID desc
+    </select>
+
+    <select id="getLastActionFreq" resultType="Integer" >
+        select FREQUENCY
+        from PUBLIC_QUERY_NUM
+        where ACTION = #{actionName}
+        and rownum =1
+        order by FREQUENCY desc
+    </select>
+
+
+
+
+
+
+
+</mapper>

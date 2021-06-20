@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracleGoct.CntrInAndOutMapper">
+    <select id="findCntrInAndOut2_3" resultType="goct.query.demo.model.CntrInAndOut">
+
+        select to_char(t.update_time,'IYYY-IW') as week,
+        count(*) as value
+        from temp_bills_info t
+        where t.read_flg ='Y'
+        and job_type='2_3'
+        group by to_char(t.update_time,'IYYY-IW')
+        order by to_char(t.update_time,'IYYY-IW')   asc
+    </select>
+
+
+    <select id="findCntrInAndOut3_2" resultType="goct.query.demo.model.CntrInAndOut">
+     select to_char(t.update_time,'IYYY-IW') as week,
+        count(*) as value
+        from temp_bills_info t
+        where t.read_flg ='Y'
+        and job_type='3_2'
+        group by to_char(t.update_time,'IYYY-IW')
+        order by to_char(t.update_time,'IYYY-IW')   asc
+
+     </select>
+</mapper>

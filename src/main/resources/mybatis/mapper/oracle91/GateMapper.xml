@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracle91.GateMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.Gate" >
+
+        <result column="TERMINAL" property="terminal" jdbcType="VARCHAR" />
+        <result column="YEAR" property="year" jdbcType="INTEGER" />
+        <result column="MONTH" property="month" jdbcType="VARCHAR" />
+        <result column="MONTHDAY" property="monthDay" jdbcType="VARCHAR" />
+        <result column="DAY" property="day" jdbcType="VARCHAR" />
+        <result column="KPI" property="kpi" jdbcType="VARCHAR" />
+        <result column="VALUE" property="value" jdbcType="VARCHAR" />
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID,COMPANYNAME,PHONE
+    </sql>
+
+ <select id="GetTestPro" useCache="false" statementType="CALLABLE">
+  <![CDATA[
+    {call GOCT_ETL_KPI_GATE()}
+]]>
+ </select>
+
+ <select id="getTruckTime" resultType="goct.query.demo.model.Gate">
+  select *
+  from DASHBOARD_DAILY_GATE_KPI t
+  where kpi = '外拖回流时间'
+   and terminal = 'GOCT'
+  order by monthday asc
+ </select>
+ <select id="getTruckNum" resultType="goct.query.demo.model.Gate">
+   select *
+  from DASHBOARD_DAILY_GATE_KPI t
+  where kpi = '进出车次数量'
+   and terminal = 'GOCT'
+    order by monthday asc
+ </select>
+ <select id="getThroughput" resultType="goct.query.demo.model.Gate">
+   select *
+  from DASHBOARD_DAILY_GATE_KPI t
+  where kpi = '进出闸操作量'
+   and terminal = 'GOCT'
+    order by monthday asc
+ </select>
+
+    <select id="getYesterday" resultType="goct.query.demo.model.Gate">
+        select *
+        from DASHBOARD_DAILY_GATE_KPI t
+        where monthday = #{date}
+        and KPI in('外拖回流时间','进出车次数量','进出闸操作量','换烂柜数量','换烂柜平均时间')
+        and terminal = 'GOCT'
+        order by kpi desc
+    </select>
+
+
+    <select id="getYesterdayFE" resultType="goct.query.demo.model.Gate">
+        select *
+        from DASHBOARD_DAILY_GATE_KPI t
+        where monthday = #{date}
+        and KPI in('重进','重出','吉进','吉出')
+        and terminal = 'GOCT'
+        order by kpi desc
+    </select>
+
+
+    <select id="getTruckTimeByYear" resultType="goct.query.demo.model.Gate">
+        select round(avg(value),2) value,month,'外拖回流时间' KPI
+        from DASHBOARD_DAILY_GATE_KPI t
+        where year =  #{year}
+        and KPI in('外拖回流时间')
+        and terminal = 'GOCT'
+           group by  month
+        order by month
+    </select>
+    <select id="getTruckNumByYear" resultType="goct.query.demo.model.Gate">
+        select sum(value) value,month,'进出车次数量' KPI
+        from DASHBOARD_DAILY_GATE_KPI t
+        where year = #{year}
+        and KPI in('进出车次数量')
+        and terminal = 'GOCT'
+        group by  month
+        order by month
+    </select>
+    <select id="getThroughputByYear" resultType="goct.query.demo.model.Gate">
+        select sum(value) value,month,'进出闸操作量' KPI
+        from DASHBOARD_DAILY_GATE_KPI t
+        where kpi = '进出闸操作量'
+         and year = #{year}
+         and terminal = 'GOCT'
+        group by  month
+        order by month
+    </select>
+
+
+    <select id="getEin" resultType="goct.query.demo.model.Gate">
+        SELECT * FROM dashboard_daily_gate_kpi
+        WHERE KPI in('吉进')
+        and terminal = 'GOCT'
+         order by monthday,kpi
+    </select>
+    <select id="getEout" resultType="goct.query.demo.model.Gate">
+        SELECT * FROM dashboard_daily_gate_kpi
+        WHERE KPI in('吉出')
+        and terminal = 'GOCT'
+         order by monthday,kpi
+    </select>
+    <select id="getFout" resultType="goct.query.demo.model.Gate">
+        SELECT * FROM dashboard_daily_gate_kpi
+        WHERE KPI in('重出')
+        and terminal = 'GOCT'
+         order by monthday,kpi
+    </select>
+    <select id="getFin" resultType="goct.query.demo.model.Gate">
+        SELECT * FROM dashboard_daily_gate_kpi
+        WHERE KPI in('重进')
+        and terminal = 'GOCT'
+         order by monthday,kpi
+    </select>
+
+    <select id="getEinByYear" resultType="goct.query.demo.model.Gate">
+    select sum(value) value,month,'吉进' KPI
+    from DASHBOARD_DAILY_GATE_KPI t
+    where year =  #{year}
+    and KPI in('吉进')
+    and terminal = 'GOCT'
+
+    group by  month
+    order by month
+</select>
+
+    <select id="getFinByYear" resultType="goct.query.demo.model.Gate">
+        select sum(value) value,month,'重进' KPI
+        from DASHBOARD_DAILY_GATE_KPI t
+        where year =  #{year}
+        and KPI in('重进')
+        and terminal = 'GOCT'
+
+        group by  month
+        order by month
+    </select>
+    <select id="getEoutByYear" resultType="goct.query.demo.model.Gate">
+        select sum(value) value,month,'吉出' KPI
+        from DASHBOARD_DAILY_GATE_KPI t
+        where year =  #{year}
+        and KPI in('吉出')
+        and terminal = 'GOCT'
+
+        group by  month
+        order by month
+    </select>
+    <select id="getFoutByYear" resultType="goct.query.demo.model.Gate">
+        select sum(value) value,month,'重出' KPI
+        from DASHBOARD_DAILY_GATE_KPI t
+        where year =  #{year}
+        and KPI in('重出')
+        and terminal = 'GOCT'
+
+        group by  month
+        order by month
+    </select>
+
+
+
+
+
+
+</mapper>

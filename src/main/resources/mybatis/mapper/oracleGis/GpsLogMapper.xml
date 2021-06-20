@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracleGis.GpsMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.GpsDeviceLog" >
+        <result column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+        <result column="LONGITUDE" property="longitude" jdbcType="VARCHAR" />
+        <result column="LATITUDE" property="latitude" jdbcType="VARCHAR" />
+        <result column="SPEED" property="speed" jdbcType="VARCHAR" />
+        <result column="LST_DATE_TIM" property="lstDateTim" jdbcType="VARCHAR" />
+        <result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+        <result column="DIRECTION" property="direction" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="DEVICE_NAM" property="deviceNam" jdbcType="VARCHAR" />
+        <result column="PORT_CODE" property="portCode" jdbcType="VARCHAR" />
+        <result column="TRK_DIR" property="trkDir" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findByCondition" resultMap="BaseResultMap" >
+        select * from t_gps_device_log t
+        <include refid="findWhere"/>
+        ORDER BY LST_DATE_TIM DESC
+    </select>
+
+    <sql id="findWhere">
+        <where>
+            lst_date_tim >SYSDATE -1/24
+            and rownum &lt; 21
+            <if test="deviceName != null and deviceName != ''">
+                and device_nam = #{deviceName}
+            </if>
+            <if test="deviceIp != null and deviceIp != ''">
+                and device_id = #{deviceIp}
+            </if>
+
+        </where>
+    </sql>
+
+
+
+</mapper>

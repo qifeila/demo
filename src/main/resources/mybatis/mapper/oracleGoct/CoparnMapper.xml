@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracleGoct.CoparnMapper">
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.Coparn">
+
+        <result column="TRANS_ODR_NO" property="odr_no" jdbcType="VARCHAR"/>
+        <result column="CNTR_NO" property="cntr_no" jdbcType="VARCHAR"/>
+        <result column="CNTR_REPAIR_STATE" property="repair_state" jdbcType="VARCHAR"/>
+        <result column="REPAIRER" property="repairer" jdbcType="VARCHAR"/>
+        <result column="REPAIR_REMARK" property="repair_remark" jdbcType="VARCHAR"/>
+        <result column="REPAIR_TIME" property="repair_time" jdbcType="TIMESTAMP"/>
+        <result column="USED_DATE" property="used_date" jdbcType="TIMESTAMP"/>
+
+    </resultMap>
+
+
+    <select id="findByPk" resultMap="BaseResultMap">
+        select *
+        from TB_COPARN
+        where TRANS_ODR_NO = #{odr_no}
+    </select>
+    <select id="findByCntr" resultMap="BaseResultMap">
+        select *
+        from TB_COPARN
+        where  CNTR_NO = #{cntrNo}
+        and FE='E'
+        and USED_DATE is null
+        and SIC_NO is not null
+        and IO_MODE = 'I'
+        order by UPDATE_TIME desc
+    </select>
+    <update id="updateCopar" parameterType="goct.query.demo.model.Coparn">
+        update TB_COPARN
+        <set>
+            <if test="repair_state != null">CNTR_REPAIR_STATE=#{repair_state},</if>
+            <if test="repairer != null">REPAIRER=#{repairer},</if>
+            <if test="repair_remark != null">REPAIR_REMARK=#{repair_remark},</if>
+            <if test="repair_time != null">REPAIR_TIME=#{repair_time}</if>
+        </set>
+        where TRANS_ODR_NO=#{odr_no}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracle91.EmployeeMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.Employee" >
+        <id column="UserID" property="employeeId" jdbcType="VARCHAR" />
+
+        <result column="EmployeeCode" property="employeeCode" jdbcType="VARCHAR" />
+        <result column="WeixinID" property="weixinId" jdbcType="VARCHAR" />
+        <result column="A0101" property="employeeName" jdbcType="VARCHAR" />
+        <result column="A0190" property="a0190" jdbcType="VARCHAR" />
+        <result column="GZ_YM" property="gzYm" jdbcType="VARCHAR" />
+
+        <result column="GZ0269"  property="dept" jdbcType="VARCHAR" />
+
+        <result column="GZ0270"  property="gz0270" jdbcType="VARCHAR" />
+        <result column="GZ02290" property="gz02290" jdbcType="VARCHAR" />
+
+        <result column="GZ02291" property="gz02291" jdbcType="VARCHAR" />
+        <result column="GZ02292" property="gz02292" jdbcType="VARCHAR" />
+        <result column="GZ02293" property="gz02293" jdbcType="VARCHAR" />
+        <result column="GZ0207"  property="gz0207"  jdbcType="VARCHAR" />
+        <result column="GZ0206"  property="gz0206"  jdbcType="VARCHAR" />
+        <result column="GZ02276" property="gz02276" jdbcType="VARCHAR" />
+        <result column="GZ02289" property="gz02289" jdbcType="VARCHAR" />
+        <result column="GZ02277" property="gz02277" jdbcType="VARCHAR" />
+        <result column="GZ0252"  property="gz0252"  jdbcType="VARCHAR" />
+        <result column="GZ0106"  property="gz0106"  jdbcType="VARCHAR" />
+        <result column="C21119"  property="c21119"  jdbcType="VARCHAR" />
+        <result column="GZ0222"  property="gz0222"  jdbcType="VARCHAR" />
+        <result column="GZ03999" property="gz03999" jdbcType="VARCHAR" />
+        <result column="C21318"  property="c21318"  jdbcType="VARCHAR" />
+        <result column="GZ0208"  property="gz0208"  jdbcType="VARCHAR" />
+        <result column="GZ0253"  property="gz0253"  jdbcType="VARCHAR" />
+
+
+        <result column="GZ02121" property="gz02121" jdbcType="VARCHAR" />
+        <result column="GZ02143" property="gz02143" jdbcType="VARCHAR" />
+        <result column="GZ02162" property="gz02162" jdbcType="VARCHAR" />
+        <result column="GZ0239"  property="gz0239"   jdbcType="VARCHAR" />
+        <result column="GZ02132" property="gz02132" jdbcType="VARCHAR" />
+        <result column="GZ02190" property="gz02190" jdbcType="VARCHAR" />
+        <result column="GZ02211" property="gz02211" jdbcType="VARCHAR" />
+        <result column="GZ0261"  property="gz0261"  jdbcType="VARCHAR" />
+        <result column="GZ02082" property="gz02082" jdbcType="VARCHAR" />
+        <result column="GZ02083" property="gz02083" jdbcType="VARCHAR" />
+        <result column="GZ02084" property="gz02084" jdbcType="VARCHAR" />
+        <result column="GZ02197" property="gz02197" jdbcType="VARCHAR" />
+        <result column="GZ02294" property="gz02294" jdbcType="VARCHAR" />
+        <result column="total"   property="total"   jdbcType="VARCHAR" />
+        <result column="GZ0254"  property="gz0254"    jdbcType="VARCHAR" />
+
+
+        <result column="totalactual" property="totalActual" jdbcType="VARCHAR" />
+        <result column="GZ0260" property="gz0260" jdbcType="VARCHAR" />
+        <result column="GZ02275" property="gz02275" jdbcType="VARCHAR" />
+
+
+
+
+
+
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID,COMPANYNAME,PHONE
+    </sql>
+
+
+
+    <select id="getBinding" resultMap="BaseResultMap">
+       SELECT T1.[WeixinID]
+										,T1.[UserID]
+										,CONVERT(VARCHAR(10),T2.[Type]) AS Type
+									   FROM [ePortal].[Weixin].[View_UserBinding] T1
+								 INNER JOIN [ePortal].[SystemManagement].[User] T2 ON T1.[UserID] = T2.[UserID]
+								  WHERE  T1.[WeixinID]= #{weixinId}
+    </select>
+    <!--//插入用户行为数据jianhua 。-->
+    <select id="getShiro" >
+        insert into PUBLIC_QUERY_NUM (ACTION,TIME)
+        values(#{actionName},#{time})
+    </select>
+
+    <select id="getSalary" >
+        update  [ePortal].[SystemManagement].[User] SET EmployeeID =  #{employeeId}
+        WHERE  Name =  #{name}
+    </select>
+
+
+
+</mapper>

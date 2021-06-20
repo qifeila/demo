@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracleGoct.GateEirMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.GateEir" >
+        <result column="CNTR_NO" property="cntr_no" jdbcType="VARCHAR" />
+        <result column="PTNR_CODE" property="ptnr_code" jdbcType="VARCHAR" />
+        <result column="OLD_VSL_NM" property="old_vsl_nm" jdbcType="VARCHAR" />
+        <result column="OUT_VOY" property="out_voy" jdbcType="VARCHAR" />
+        <result column="POD" property="pod" jdbcType="VARCHAR" />
+        <result column="SET_TEMP" property="set_temp" jdbcType="DOUBLE" />
+        <result column="WGT" property="wgt" jdbcType="DOUBLE" />
+        <result column="SZTP" property="sztp" jdbcType="VARCHAR" />
+        <result column="SEAL_NO3" property="seal_no3" jdbcType="VARCHAR" />
+        <result column="UNNO" property="unno" jdbcType="VARCHAR" />
+        <result column="IMDG" property="imdg" jdbcType="VARCHAR" />
+        <result column="OS_HEIGHT" property="os_height" jdbcType="DOUBLE" />
+        <result column="OS_PORT" property="os_port" jdbcType="DOUBLE" />
+        <result column="OS_STBD" property="os_stbd" jdbcType="DOUBLE" />
+        <result column="COMPANYNAME" property="companyName" jdbcType="VARCHAR" />
+        <result column="DRIVERNAME" property="driverName" jdbcType="VARCHAR" />
+        <result column="MOBILEPHONE" property="mobilePhone" jdbcType="VARCHAR" />
+        <result column="TRUCK_NO" property="truck_no" jdbcType="VARCHAR" />
+        <result column="UPDATE_TIME" property="update_time" jdbcType="TIMESTAMP" />
+        <result column="SO_NO" property="so_no" jdbcType="VARCHAR" />
+        <result column="CNTR_ID" property="cntr_id" jdbcType="VARCHAR" />
+        <result column="CNTR_UID" property="cntr_uid" jdbcType="VARCHAR" />
+        <result column="DATA_FLG" property="data_flg" jdbcType="VARCHAR" />
+        <result column="BLOCKCHAIN_FLG" property="blockchain_flg" jdbcType="VARCHAR" />
+        <result column="JOB_TYPE" property="job_type" jdbcType="VARCHAR" />
+        <result column="FE" property="fe" jdbcType="VARCHAR" />
+        <result column="JOB_NO" property="job_no" jdbcType="VARCHAR" />
+        <result column="CNTR_STATE" property="cntr_state" jdbcType="VARCHAR" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+        <collection property="gateCheckList" javaType="ArrayList" ofType="goct.query.demo.model.GateCheckInfo" select="getCheckById" column="CNTR_ID">
+            <!--<id property="cntrId" jdbcType="VARCHAR" column="CNTR_ID" />-->
+            <!--<result property="account" jdbcType="VARCHAR" column="ACCOUNT" />-->
+            <!--<result property="remark" jdbcType="VARCHAR" column="REMARK" />-->
+            <!--<result property="updateTime" jdbcType="TIMESTAMP" column="UPDATE_TIME" />-->
+            <!--<result property="cntrNo" jdbcType="VARCHAR" column="CNTR_NO" />-->
+            <!--<result property="dmgCond" jdbcType="VARCHAR" column="DMG_COND" />-->
+            <!--<result property="fe" jdbcType="VARCHAR" column="FE" />-->
+        </collection>
+    </resultMap>
+
+    <select id="findByCntr" resultMap="BaseResultMap">
+        select *
+        from GOCT_GATE_EIR_LIST A
+        where A.JOB_TYPE = 'GO'
+        and A.FE = 'F'
+        and A.CNTR_NO = #{cntrNo}
+    </select>
+    <select id="getCheckById" resultType="goct.query.demo.model.GateCheckInfo">
+        select * from GOCT_GATECHECK_DMG where CNTR_ID = #{cntrId} order by UPDATE_TIME DESC
+    </select>
+
+
+
+
+
+
+
+</mapper>

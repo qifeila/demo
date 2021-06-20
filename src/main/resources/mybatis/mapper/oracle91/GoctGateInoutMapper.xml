@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mapper.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="goct.query.demo.mapper.oracle91.GoctGateInoutMapper" >
+    <resultMap id="BaseResultMap" type="goct.query.demo.model.GoctGateInout" >
+
+        <result column="YMD" property="ymd" jdbcType="VARCHAR" />
+        <result column="HEAD_NUM" property="headNum" jdbcType="INTEGER" />
+        <result column="GF_F" property="gfF" jdbcType="VARCHAR" />
+        <result column="GF_E" property="gfE" jdbcType="VARCHAR" />
+        <result column="GO_F" property="goF" jdbcType="VARCHAR" />
+        <result column="GO_E" property="goE" jdbcType="VARCHAR" />
+        <result column="TEU" property="teu" jdbcType="VARCHAR" />
+
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        YMD,HEAD_NUM,GF_F,GF_E,GO_F,GO_E,TEU
+    </sql>
+
+ <select id="findAll" resultMap="BaseResultMap">
+  select <include refid="Base_Column_List"></include>
+  from GOCT.GOCT_GATE_INOUT t
+
+ </select>
+
+
+</mapper>
